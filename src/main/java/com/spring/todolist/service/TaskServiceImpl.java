@@ -1,13 +1,13 @@
 package com.spring.todolist.service;
 
 
+import com.spring.todolist.exception.TaskNotFoundException;
 import com.spring.todolist.model.Task;
 import com.spring.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -27,8 +27,12 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public Task getTaskById(Long id) {
-        return taskRepository.getById(id);
+        // More Business Logic
+        if(taskRepository.findById(id).isEmpty())
+            throw new TaskNotFoundException("Requested Cloud Vendor does not exist");
+        return taskRepository.findById(id).get();
     }
+
 
     @Override
     public void deleteTask(Task task) {
