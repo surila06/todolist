@@ -16,7 +16,9 @@ public interface TaskService {
 
    Task getTaskById(Long id);
 
-   void deleteTask(Task task);
+    List<Task> findByTask(String taskName);
+
+    void deleteTask(Task task);
 
     Task updateTask(Task task);
 }

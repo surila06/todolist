@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task,Long> {
 
-    public Task findByTask(String task);
+    public List<Task> findByTask(String task);
 
     public List<Task> findByCompletedTrue();
     public List<Task> findByCompletedFalse();

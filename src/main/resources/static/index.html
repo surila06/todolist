@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock WebSocket Client</title>
+</head>
+
+<body>
+<h1>Stock WebSocket Client</h1>
+<input type="text" id="stockSymbol" placeholder="Enter stock symbol">
+<button onclick="subscribe()">Subscribe</button>
+<div id="stockData"></div>
+
+<script>
+    var socket = new WebSocket("ws://localhost:8080/ws/stocks");
+
+    socket.onopen = function (event) {
+      console.log("WebSocket is connected.");
+    };
+
+    socket.onmessage = function (event) {
+      document.getElementById("stockData").innerText = event.data;
+    };
+
+    socket.onclose = function (event) {
+      console.log("WebSocket connection closed:", event);
+    };
+
+    socket.onerror = function (error) {
+      console.error("WebSocket error:", error);
+    };
+
+    function subscribe() {
+      var symbol = document.getElementById("stockSymbol").value;
+      socket.send(symbol);
+    }
+
+    socket.onmessage = function (event) {
+      document.getElementById("stockData").innerText = JSON.stringify(event.data, null, 2);
+    };
+
+    function subscribe() {
+      var symbol = document.getElementById("stockSymbol").value;
+      socket.send(symbol);
+    }
+  </script>
+</body>
+
+</html>
